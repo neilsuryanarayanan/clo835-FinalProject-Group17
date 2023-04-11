@@ -11,7 +11,7 @@ DBHOST = os.environ.get("DBHOST") or "localhost"
 DBUSER = os.environ.get("DBUSER") or "root"
 DBPWD = os.environ.get("DBPWD") or "password"
 DATABASE = os.environ.get("DATABASE") or "employees"
-DBPORT = int(os.environ.get("DBPORT"))
+DBPORT = int(os.environ.get("DBPORT")) or 3306
 
 # Create a connection to the MySQL database
 db_conn = connections.Connection(
@@ -24,6 +24,8 @@ db_conn = connections.Connection(
 
 output = {}
 table = 'employee';
+
+image = "https://images.unsplash.com/photo-1459478309853-2c33a60058e7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8Mnx8fGVufDB8fHx8&w=1000&q=80"
 
 @app.route("/", methods=['GET', 'POST'])
 def home():
