@@ -3,6 +3,7 @@ from pymysql import connections
 import os
 import random
 import argparse
+import boto3
 
 
 app = Flask(__name__)
@@ -11,6 +12,7 @@ DBHOST = os.environ.get("DBHOST") or "localhost"
 DBUSER = os.environ.get("DBUSER") or "root"
 DBPWD = os.environ.get("DBPWD") or "password"
 DATABASE = os.environ.get("DATABASE") or "employees"
+BGIMG = os.environ.get("BGIMG") or "projectbg.jpg"
 DBPORT = int(os.environ.get("DBPORT")) or 3306
 
 # Create a connection to the MySQL database
@@ -27,6 +29,25 @@ table = 'employee';
 
 image = "https://images.unsplash.com/photo-1459478309853-2c33a60058e7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8Mnx8fGVufDB8fHx8&w=1000&q=80"
 
+bucket = "clo835images17"
+image_default = "projectbg.jpg"
+
+@app.route("/download", methods=['GET','POST'])
+def download(bucket, imageName = image_default):
+    try:
+        imagesDir = "images"
+        if not os.path.exists(imagesDir):
+            os.makedirs(imagesDir)
+        bgImagePath = os.path.join(imagesDir, "background.png")
+        
+        print(bucket, imageName)
+        s3 = boto3.resource('s3')
+        s3.Bucket(bucket).download_file(image_name, bgImagePath)
+        return bgImagePath
+
+   except Exception as e:
+       print("Exception occured while fetching the image! Check the log --> ", e)
+       
 @app.route("/", methods=['GET', 'POST'])
 def home():
     return render_template('addemp.html', image=image)
@@ -92,4 +113,5 @@ def FetchData():
                            lname=output["last_name"], interest=output["primary_skills"], location=output["location"], image=image)
 
 if __name__ == '__main__':
+    download(bucket, BGIMG)
     app.run(host='0.0.0.0',port=8080,debug=True)
