@@ -42,11 +42,10 @@ def download(bucket, imageName = image_default):
         
         print(bucket, imageName)
         s3 = boto3.resource('s3')
-        s3.Bucket(bucket).download_file(image_name, bgImagePath)
+        s3.Bucket(bucket).download_file(imageName, bgImagePath)
         return bgImagePath
-
-   except Exception as e:
-       print("Exception occured while fetching the image! Check the log --> ", e)
+    except Exception as e:
+        print("Exception occured while fetching the image! Check the log --> ", e)
        
 @app.route("/", methods=['GET', 'POST'])
 def home():
