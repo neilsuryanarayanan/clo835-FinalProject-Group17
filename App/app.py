@@ -27,23 +27,34 @@ db_conn = connections.Connection(
 output = {}
 table = 'employee';
 
-image = "https://images.unsplash.com/photo-1459478309853-2c33a60058e7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8Mnx8fGVufDB8fHx8&w=1000&q=80"
+image1 = "https://cdn.pixabay.com/photo/2018/01/27/23/46/toronto-3112508__340.jpg"
 
 bucket = "clo835images17"
 image_default = "projectbg.jpg"
 
-@app.route("/download", methods=['GET','POST'])
-def download(bucket, imageName = image_default):
+@app.route("/download", methods=['GET', 'POST'])
+def download(bucket = bucket, imageName = image_default):
     try:
         imagesDir = "images"
         if not os.path.exists(imagesDir):
             os.makedirs(imagesDir)
         bgImagePath = os.path.join(imagesDir, "background.png")
         
+        access_key = 'ASIAYJXBM6SWVSSQ7RHA'
+        secret_key = 'XuxhvMRFEmt8TlwqoKm8MP0mHsRdefPeckMoiyLN'
+        region_name = 'us-east-1'
+        session_token = 'FwoGZXIvYXdzENr//////////wEaDE+bPXBFzT2Md4nPYSLEAaG7DgUf172+3/ACEoI/pVI3FPL84ypEygx2tYqAsy60onhjJKpjgHgUpQFLD7S/KLwlXCs+xJ9Yf8rLDn89qEepL1udsqc9pP5jjHikzHN+wumQQcxqtwBw8sKWSbkdJP4JmowtM8XtI7h3U/FRNldzqZ0hMex6dPPWP+b8ckT2UKLou3GsnB77K9jTMTiirvEGaKDtciZyb637MCLfqcso0c62zXKZ95svL1XpgvfJsgHYVw+lSyyf03gL7kPBnJ5VnFIomPbXoQYyLY75r0PyglHiKelusMoPTbIMoaAJyDvQlunU6BJVgQJYDHI1bQqvLU91/p4+XQ==' 
+        session = boto3.Session(
+            aws_access_key_id=access_key,
+            aws_secret_access_key=secret_key,
+            region_name=region_name,
+            aws_session_token=session_token
+            )
+        
         print(bucket, imageName)
-        s3 = boto3.resource('s3')
+        s3 = session.resource('s3')
         s3.Bucket(bucket).download_file(imageName, bgImagePath)
-        return bgImagePath
+        return os.path.join("../",bgImagePath)
     except Exception as e:
         print("Exception occured while fetching the image! Check the log --> ", e)
        
@@ -53,7 +64,7 @@ def home():
 
 @app.route("/about", methods=['GET','POST'])
 def about():
-    return render_template('about.html', image=image)
+    return render_template('about.html', image=image1)
     
 @app.route("/addemp", methods=['POST'])
 def AddEmp():
@@ -112,5 +123,6 @@ def FetchData():
                            lname=output["last_name"], interest=output["primary_skills"], location=output["location"], image=image)
 
 if __name__ == '__main__':
-    download(bucket, BGIMG)
+    image = download(bucket, BGIMG)
+    print(image)
     app.run(host='0.0.0.0',port=8080,debug=True)
