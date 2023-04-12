@@ -40,10 +40,10 @@ def download(bucket = bucket, imageName = image_default):
             os.makedirs(imagesDir)
         bgImagePath = os.path.join(imagesDir, "background.png")
         
-        access_key = 'ASIAYJXBM6SWVSSQ7RHA'
-        secret_key = 'XuxhvMRFEmt8TlwqoKm8MP0mHsRdefPeckMoiyLN'
+        access_key = ''
+        secret_key = ''
         region_name = 'us-east-1'
-        session_token = 'FwoGZXIvYXdzENr//////////wEaDE+bPXBFzT2Md4nPYSLEAaG7DgUf172+3/ACEoI/pVI3FPL84ypEygx2tYqAsy60onhjJKpjgHgUpQFLD7S/KLwlXCs+xJ9Yf8rLDn89qEepL1udsqc9pP5jjHikzHN+wumQQcxqtwBw8sKWSbkdJP4JmowtM8XtI7h3U/FRNldzqZ0hMex6dPPWP+b8ckT2UKLou3GsnB77K9jTMTiirvEGaKDtciZyb637MCLfqcso0c62zXKZ95svL1XpgvfJsgHYVw+lSyyf03gL7kPBnJ5VnFIomPbXoQYyLY75r0PyglHiKelusMoPTbIMoaAJyDvQlunU6BJVgQJYDHI1bQqvLU91/p4+XQ==' 
+        session_token = '' 
         session = boto3.Session(
             aws_access_key_id=access_key,
             aws_secret_access_key=secret_key,
