@@ -13,7 +13,7 @@ DBUSER = os.environ.get("DBUSER") or "root"
 DBPWD = os.environ.get("DBPWD") or "password"
 DATABASE = os.environ.get("DATABASE") or "employees"
 BGIMG = os.environ.get("BGIMG") or "projectbg.jpg"
-DBPORT = int(os.environ.get("DBPORT")) or 3306
+DBPORT = int(os.environ.get("DBPORT", "3306"))
 
 # Create a connection to the MySQL database
 db_conn = connections.Connection(
@@ -27,7 +27,7 @@ db_conn = connections.Connection(
 output = {}
 table = 'employee';
 
-image1 = "https://cdn.pixabay.com/photo/2018/01/27/23/46/toronto-3112508__340.jpg"
+image1 = "https://clo835images17.s3.amazonaws.com/projectbg.jpg"
 
 bucket = "clo835images17"
 image_default = "projectbg.jpg"
