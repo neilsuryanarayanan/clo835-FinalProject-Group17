@@ -35,11 +35,10 @@ image_default = "projectbg.jpg"
 @app.route("/download", methods=['GET', 'POST'])
 def download(bucket = bucket, imageName = image_default):
     try:
-        imagesDir = "images"
-        templateImages = "templates/images"
-        if not os.path.exists(templateImages):
-            os.makedirs(templateImages)
-        bgImagePath = os.path.join(templateImages, "background.png")
+        imagesDir = "static"
+        if not os.path.exists(imagesDir):
+            os.makedirs(imagesDir)
+        bgImagePath = os.path.join(imagesDir, "background.png")
         
         print(bucket, imageName)
         s3 = boto3.resource('s3')
