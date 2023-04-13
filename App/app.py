@@ -27,8 +27,6 @@ db_conn = connections.Connection(
 output = {}
 table = 'employee';
 
-image1 = "https://clo835images17.s3.amazonaws.com/projectbg.jpg"
-
 bucket = "clo835images17"
 image_default = "projectbg.jpg"
 
@@ -53,7 +51,7 @@ def home():
 
 @app.route("/about", methods=['GET','POST'])
 def about():
-    return render_template('about.html', image=image1)
+    return render_template('about.html', image=image)
     
 @app.route("/addemp", methods=['POST'])
 def AddEmp():
