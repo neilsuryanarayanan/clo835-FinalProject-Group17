@@ -36,25 +36,15 @@ image_default = "projectbg.jpg"
 def download(bucket = bucket, imageName = image_default):
     try:
         imagesDir = "images"
-        if not os.path.exists(imagesDir):
-            os.makedirs(imagesDir)
-        bgImagePath = os.path.join(imagesDir, "background.png")
-        
-        access_key = ''
-        secret_key = ''
-        region_name = 'us-east-1'
-        session_token = '' 
-        session = boto3.Session(
-            aws_access_key_id=access_key,
-            aws_secret_access_key=secret_key,
-            region_name=region_name,
-            aws_session_token=session_token
-            )
+        templateImages = "templates/images"
+        if not os.path.exists(templateImages):
+            os.makedirs(templateImages)
+        bgImagePath = os.path.join(templateImages, "background.png")
         
         print(bucket, imageName)
-        s3 = session.resource('s3')
+        s3 = boto3.resource('s3')
         s3.Bucket(bucket).download_file(imageName, bgImagePath)
-        return os.path.join("../",bgImagePath)
+        return os.path.join(imagesDir, "background.png")
     except Exception as e:
         print("Exception occured while fetching the image! Check the log --> ", e)
        
