@@ -6,7 +6,7 @@ metadata:
     app: employees
     component: frontend
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: employees
@@ -24,9 +24,12 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: mysql
-                  key: root-password
+                  key: password
             - name: DBUSER
-              value: root
+              valueFrom:
+                secretKeyRef:
+                  name: mysql
+                  key: username
             - name: DBHOST
               value: "mysql.final.svc.cluster.local"
             - name: DBPORT

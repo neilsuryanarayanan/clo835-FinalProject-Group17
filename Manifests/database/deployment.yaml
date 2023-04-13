@@ -6,7 +6,7 @@ metadata:
     app: mysql
     component: database
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: mysql
@@ -24,7 +24,7 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: mysql
-                  key: root-password
+                  key: password
           ports:
             - containerPort: 3306
       imagePullSecrets:
