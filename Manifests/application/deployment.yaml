@@ -21,7 +21,10 @@ spec:
           image: 570629616813.dkr.ecr.us-east-1.amazonaws.com/app-image-clo835-final-project:latest
           env:
             - name: DBPWD
-              value: pw
+              valueFrom:
+                secretKeyRef:
+                  name: mysql
+                  key: root-password
             - name: DBUSER
               value: root
             - name: DBHOST
