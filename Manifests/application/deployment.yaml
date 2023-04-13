@@ -25,9 +25,11 @@ spec:
             - name: DBUSER
               value: root
             - name: DBHOST
-              value: "mysql.database.svc.cluster.local"
+              value: "mysql.final.svc.cluster.local"
             - name: DBPORT
               value: "3306"
+            - name: BGIMG
+              value: "projectbg.jpg"
           ports:
             - containerPort: 8080
       imagePullSecrets:
