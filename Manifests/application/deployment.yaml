@@ -37,6 +37,6 @@ spec:
             - name: BGIMG
               value: "projectbg.jpg"
           ports:
-            - containerPort: 8080
+            - containerPort: 81
       imagePullSecrets:
         - name: regcred

@@ -112,4 +112,4 @@ def FetchData():
 if __name__ == '__main__':
     image = download(bucket, BGIMG)
     print(image)
-    app.run(host='0.0.0.0',port=8080,debug=True)
+    app.run(host='0.0.0.0',port=81,debug=True)
