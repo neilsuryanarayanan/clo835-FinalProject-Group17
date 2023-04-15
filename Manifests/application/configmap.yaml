@@ -4,3 +4,5 @@ metadata:
   name: app-configmap
 data:
   bgimg: "projectbg.jpg"
+  grpname: "Group 17"
+  
