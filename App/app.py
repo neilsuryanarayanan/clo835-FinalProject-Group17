@@ -13,6 +13,7 @@ DBUSER = os.environ.get("DBUSER") or "root"
 DBPWD = os.environ.get("DBPWD") or "password"
 DATABASE = os.environ.get("DATABASE") or "employees"
 BGIMG = os.environ.get("BGIMG") or "projectbg.jpg"
+GRPNAME = os.environ.get("GRPNAME") or "Group 17"
 DBPORT = int(os.environ.get("DBPORT", "3306"))
 
 # Create a connection to the MySQL database
@@ -47,11 +48,11 @@ def download(bucket = bucket, imageName = image_default):
        
 @app.route("/", methods=['GET', 'POST'])
 def home():
-    return render_template('addemp.html', image=image)
+    return render_template('addemp.html', image=image, group_name=GRPNAME)
 
 @app.route("/about", methods=['GET','POST'])
 def about():
-    return render_template('about.html', image=image)
+    return render_template('about.html', image=image, group_name=GRPNAME)
     
 @app.route("/addemp", methods=['POST'])
 def AddEmp():
@@ -75,11 +76,11 @@ def AddEmp():
         cursor.close()
 
     print("all modification done...")
-    return render_template('addempoutput.html', name=emp_name, image=image)
+    return render_template('addempoutput.html', name=emp_name, image=image, group_name=GRPNAME)
 
 @app.route("/getemp", methods=['GET', 'POST'])
 def GetEmp():
-    return render_template("getemp.html", image=image)
+    return render_template("getemp.html", image=image, group_name=GRPNAME)
 
 
 @app.route("/fetchdata", methods=['GET','POST'])
@@ -107,7 +108,7 @@ def FetchData():
         cursor.close()
 
     return render_template("getempoutput.html", id=output["emp_id"], fname=output["first_name"],
-                           lname=output["last_name"], interest=output["primary_skills"], location=output["location"], image=image)
+                           lname=output["last_name"], interest=output["primary_skills"], location=output["location"], image=image, group_name=GRPNAME)
 
 if __name__ == '__main__':
     image = download(bucket, BGIMG)
