@@ -75,7 +75,7 @@ jobs:
         echo "Pause for 30 seconds to let database container start"
         sleep 30
         
-        curl localhost:80 -vvv
+        curl 172.17.0.3:80 -vvv
         
         # Push
         docker push $ECR_REGISTRY/${DATABASE_ECR_PREFIX}-${ECR_REPOSITORY}:${IMAGE_TAG}
