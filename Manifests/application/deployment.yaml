@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
         - name: application-container
-          image: 570629616813.dkr.ecr.us-east-1.amazonaws.com/app-image-clo835-final-project:latest
+          image: 570629616813.dkr.ecr.us-east-1.amazonaws.com/app-image-clo835-final-project:latest  #697366856643.dkr.ecr.us-east-1.amazonaws.com/app-image-clo835-final-project:latest
           env:
             - name: DBPWD
               valueFrom:
@@ -35,7 +35,10 @@ spec:
             - name: DBPORT
               value: "3306"
             - name: BGIMG
-              value: "projectbg.jpg"
+              valueFrom:
+                configMapKeyRef:
+                  name: app-configmap
+                  key: bgimg
           ports:
             - containerPort: 81
       imagePullSecrets:
