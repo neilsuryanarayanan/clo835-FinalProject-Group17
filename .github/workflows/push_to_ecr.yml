@@ -67,15 +67,15 @@ jobs:
         # Unit test
         docker run -d -e MYSQL_ROOT_PASSWORD=$DB_PWD --name mysql $ECR_REGISTRY/${DATABASE_ECR_PREFIX}-${ECR_REPOSITORY}:${IMAGE_TAG} 
         docker ps
-        echo "Pause for 30 seconds to let database container start"
-        sleep 30
+        echo "Pause for 10 seconds to let database container start"
+        sleep 10
         
         docker run -d -p 81:80 -e DBHOST="172.17.0.2" -e DBPWD=$DB_PWD $ECR_REGISTRY/${APPLICATION_ECR_PREFIX}-${ECR_REPOSITORY}:${IMAGE_TAG}
         docker ps
-        echo "Pause for 30 seconds to let database container start"
-        sleep 30
+        echo "Pause for 10 seconds to let database container start"
+        sleep 10
         
-        curl 172.17.0.3:80 -vvv
+        curl 172.17.0.3:81 -vvv
         
         # Push
         docker push $ECR_REGISTRY/${DATABASE_ECR_PREFIX}-${ECR_REPOSITORY}:${IMAGE_TAG}
