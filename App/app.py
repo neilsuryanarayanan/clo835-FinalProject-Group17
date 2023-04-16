@@ -32,6 +32,7 @@ table = 'employee';
 default_bucket = "clo835images17"
 default_image = "projectbg.jpg"
 
+
 @app.route("/download", methods=['GET', 'POST'])
 def download(bucket = default_bucket, imageName = default_image):
     try:
