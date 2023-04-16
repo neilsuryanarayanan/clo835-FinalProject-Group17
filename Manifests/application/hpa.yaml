@@ -11,5 +11,5 @@ spec:
     kind: Deployment
     name: application
   minReplicas: 1
-  maxReplicas: 4
-  targetCPUUtilizationPercentage: 10
+  maxReplicas: 3
+  targetCPUUtilizationPercentage: 30
