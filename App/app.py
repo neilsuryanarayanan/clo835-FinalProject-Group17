@@ -13,6 +13,7 @@ DBUSER = os.environ.get("DBUSER") or "root"
 DBPWD = os.environ.get("DBPWD") or "password"
 DATABASE = os.environ.get("DATABASE") or "employees"
 BGIMG = os.environ.get("BGIMG") or "projectbg.jpg"
+BUCKETNAME = os.environ.get("BUCKETNAME") or "clo835images17"
 GRPNAME = os.environ.get("GRPNAME") or "Group 17"
 DBPORT = int(os.environ.get("DBPORT", "3306"))
 
@@ -28,11 +29,12 @@ db_conn = connections.Connection(
 output = {}
 table = 'employee';
 
-bucket = "clo835images17" #"clo835images17jaspreet"
-image_default = "projectbg.jpg"
+default_bucket = "clo835images17"
+default_image = "projectbg.jpg"
+
 
 @app.route("/download", methods=['GET', 'POST'])
-def download(bucket = bucket, imageName = image_default):
+def download(bucket = default_bucket, imageName = default_image):
     try:
         imagesDir = "static"
         if not os.path.exists(imagesDir):
@@ -111,6 +113,6 @@ def FetchData():
                            lname=output["last_name"], interest=output["primary_skills"], location=output["location"], image=image, group_name=GRPNAME)
 
 if __name__ == '__main__':
-    image = download(bucket, BGIMG)
+    image = download(BUCKETNAME, BGIMG)
     print(image)
     app.run(host='0.0.0.0',port=81,debug=True)

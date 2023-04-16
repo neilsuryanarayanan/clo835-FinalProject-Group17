@@ -53,13 +53,30 @@ jobs:
       id: login-ecr
       uses: aws-actions/amazon-ecr-login@v1
     
-    - name: Build, tag, and push image to Amazon ECR
+    - name: Build, tag, test and push image to Amazon ECR
       id: build-image
       env:
+        DB_PWD: test_pwd
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         IMAGE_TAG: "latest"
       run: |
+        # Build and tag
         docker build -t $ECR_REGISTRY/${DATABASE_ECR_PREFIX}-${ECR_REPOSITORY}:${IMAGE_TAG} -f Dockerfile_mysql .
         docker build -t $ECR_REGISTRY/${APPLICATION_ECR_PREFIX}-${ECR_REPOSITORY}:${IMAGE_TAG} .
+        
+        # Unit test
+        docker run -d -e MYSQL_ROOT_PASSWORD=$DB_PWD --name mysql $ECR_REGISTRY/${DATABASE_ECR_PREFIX}-${ECR_REPOSITORY}:${IMAGE_TAG} 
+        docker ps
+        echo "Pause for 10 seconds to let database container start"
+        sleep 10
+        
+        docker run -d -p 81:80 -e DBHOST="172.17.0.2" -e DBPWD=$DB_PWD $ECR_REGISTRY/${APPLICATION_ECR_PREFIX}-${ECR_REPOSITORY}:${IMAGE_TAG}
+        docker ps
+        echo "Pause for 10 seconds to let database container start"
+        sleep 10
+        
+        curl 172.17.0.3:81 -vvv
+        
+        # Push
         docker push $ECR_REGISTRY/${DATABASE_ECR_PREFIX}-${ECR_REPOSITORY}:${IMAGE_TAG}
         docker push $ECR_REGISTRY/${APPLICATION_ECR_PREFIX}-${ECR_REPOSITORY}:${IMAGE_TAG}
