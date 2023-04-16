@@ -3,6 +3,7 @@ kind: ConfigMap
 metadata:
   name: app-configmap
 data:
+  bucket: "clo835images17"
   bgimg: "projectbg.jpg"
   grpname: "Group 17"
   
